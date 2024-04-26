@@ -13,6 +13,7 @@ const TODO_ITEMS = [
 
 test.describe('New Todo - Refactored',()=>{
   // beforeEach should put test ON the ToDoApp screen.
+
   test('Add One ToDo', async ({page})=> {
     const context = new OutOfTheBoxContext(page);
 
@@ -24,7 +25,31 @@ test.describe('New Todo - Refactored',()=>{
     await context.Then_Total_ToDos_In_LocalStorage_Should_Be(1);
     await context.Then_Input_Cleared_For_Next_Entry();
   })
-})
+
+  test('Add Multiple ToDos', async ({page})=>{
+    const context = new OutOfTheBoxContext(page);
+
+    await context.OnToDoAppPage(); // Example of common setup steps for context based Tests.
+
+    await context.Given_A_Todo_of(TODO_ITEMS[0]);
+    await context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
+    await context.When_Add_Todo();
+    await context.Then_Todos_Should_Contain([TODO_ITEMS[0], TODO_ITEMS[1]]);
+    await context.Then_Total_ToDos_In_LocalStorage_Should_Be(2);
+    await context.Then_Input_Cleared_For_Next_Entry();
+  })
+
+  test('New Todos added to Bottom of List', async ({page})=>{
+    const context = new OutOfTheBoxContext(page);
+
+    await context.OnToDoAppPage(); // Example of common setup steps for context based Tests.
+
+    await context.Given_A_Todo_of(TODO_ITEMS[0]);
+    await context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
+    await context.When_Add_Todo();
+    await context.Then_Todos_Appear_In_Order([TODO_ITEMS[0], TODO_ITEMS[1]]);
+  })
+});
 
 test.describe('New Todo', () => {
   test('should allow me to add todo items', async ({ page }) => {

@@ -15,6 +15,12 @@ export class OutOfTheBoxContext {
         await this._pageModel.Visit();
         return this;
     }
+
+    async clearTodos(){
+        return await this.page.waitForFunction(() => {
+            localStorage['react-todos'] = [];
+        });
+    }
     
     async Given_A_Draft_Todo_Of(todoText: string){
        await this._pageModel.newTodoEntry.fill(todoText);
@@ -24,8 +30,21 @@ export class OutOfTheBoxContext {
         await this._pageModel.newTodoEntry.press("Enter");
     }
 
+    async Given_A_Todo_of(todoText:string){
+        await this.Given_A_Draft_Todo_Of(todoText);
+        await this.When_Add_Todo();
+    }
+
     async Then_Todos_Should_Contain(theseTodos: string[]){
         await expect(this._pageModel.AllTodos).toHaveText(theseTodos);
+    }
+
+    async Then_Todos_Appear_In_Order(thisOrderedArray: string[]){
+        const allTodos = await this._pageModel.AllTodos.all();
+        thisOrderedArray.forEach((entry, index) =>{
+            expect(allTodos[index]).toHaveText(entry);
+        });
+
     }
   
     async Then_Total_ToDos_In_LocalStorage_Should_Be(expected:number){
