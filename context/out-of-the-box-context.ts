@@ -28,4 +28,13 @@ export class OutOfTheBoxContext {
         await expect(this._pageModel.AllTodos).toHaveText(theseTodos);
     }
   
+    async Then_Total_ToDos_In_LocalStorage_Should_Be(expected:number){
+        return await this.page.waitForFunction(e => {
+            return JSON.parse(localStorage['react-todos']).length === e;
+          }, expected);
+    }
+
+    async Then_Input_Cleared_For_Next_Entry(){
+        await expect(this._pageModel.newTodoEntry).toBeEmpty();
+    }
 }

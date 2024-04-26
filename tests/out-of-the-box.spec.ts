@@ -13,11 +13,13 @@ const TODO_ITEMS = [
 
 test.describe('New Todo - Refactored',()=>{
   // beforeEach should put test ON the ToDoApp screen.
-  test('Can Add a ToDo', async ({page})=> {
+  test('Add a ToDo', async ({page})=> {
     const context = new OutOfTheBoxContext(page);
     await context.Given_A_Draft_Todo_Of(TODO_ITEMS[0]);
     await context.When_Add_Todo();
     await context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
+    await context.Then_Total_ToDos_In_LocalStorage_Should_Be(1);
+    await context.Then_Input_Cleared_For_Next_Entry();
   })
 })
 
@@ -46,19 +48,6 @@ test.describe('New Todo', () => {
     ]);
 
     await checkNumberOfTodosInLocalStorage(page, 2);
-  });
-
-  test('should clear text input field when an item is added', async ({ page }) => {
-    // create a new todo locator
-    const newTodo = page.getByPlaceholder('What needs to be done?');
-
-    // Create one todo item.
-    await newTodo.fill(TODO_ITEMS[0]);
-    await newTodo.press('Enter');
-
-    // Check that input is empty.
-    await expect(newTodo).toBeEmpty();
-    await checkNumberOfTodosInLocalStorage(page, 1);
   });
 
   test('should append new items to the bottom of the list', async ({ page }) => {
