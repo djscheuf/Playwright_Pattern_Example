@@ -13,8 +13,11 @@ const TODO_ITEMS = [
 
 test.describe('New Todo - Refactored',()=>{
   // beforeEach should put test ON the ToDoApp screen.
-  test('Add a ToDo', async ({page})=> {
+  test('Add One ToDo', async ({page})=> {
     const context = new OutOfTheBoxContext(page);
+
+    await context.OnToDoAppPage(); // Example of common setup steps for context based Tests.
+
     await context.Given_A_Draft_Todo_Of(TODO_ITEMS[0]);
     await context.When_Add_Todo();
     await context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
