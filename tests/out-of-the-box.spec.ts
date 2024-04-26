@@ -1,7 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
+import { OutOfTheBoxContext } from '../context/out-of-the-box-context';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://demo.playwright.dev/todomvc');
+  await page.goto('https://demo.playwright.dev/todomvc'); // eventually to be replaced by context.On...
 });
 
 const TODO_ITEMS = [
@@ -9,6 +10,16 @@ const TODO_ITEMS = [
   'feed the cat',
   'book a doctors appointment'
 ];
+
+test.describe('New Todo - Refactored',()=>{
+  // beforeEach should put test ON the ToDoApp screen.
+  test('Can Add a ToDo', async ({page})=> {
+    const context = new OutOfTheBoxContext(page);
+    await context.Given_A_Draft_Todo_Of(TODO_ITEMS[0]);
+    await context.When_Add_Todo();
+    await context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
+  })
+})
 
 test.describe('New Todo', () => {
   test('should allow me to add todo items', async ({ page }) => {
