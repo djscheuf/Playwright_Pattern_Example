@@ -16,7 +16,7 @@ export class OutOfTheBoxContext {
         return this;
     }
 
-    async clearTodos(){
+    async clearExistingTodos(){
         return await this.page.waitForFunction(() => {
             localStorage['react-todos'] = [];
         });

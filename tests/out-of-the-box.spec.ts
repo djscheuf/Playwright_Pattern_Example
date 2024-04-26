@@ -13,88 +13,38 @@ const TODO_ITEMS = [
 
 test.describe('New Todo - Refactored',()=>{
   // beforeEach should put test ON the ToDoApp screen.
+  let _context: OutOfTheBoxContext;
+  test.beforeEach(async ({page})=>{
+    _context = new OutOfTheBoxContext(page);
 
-  test('Add One ToDo', async ({page})=> {
-    const context = new OutOfTheBoxContext(page);
-
-    await context.OnToDoAppPage(); // Example of common setup steps for context based Tests.
-
-    await context.Given_A_Draft_Todo_Of(TODO_ITEMS[0]);
-    await context.When_Add_Todo();
-    await context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
-    await context.Then_Total_ToDos_In_LocalStorage_Should_Be(1);
-    await context.Then_Input_Cleared_For_Next_Entry();
-  })
-
-  test('Add Multiple ToDos', async ({page})=>{
-    const context = new OutOfTheBoxContext(page);
-
-    await context.OnToDoAppPage(); // Example of common setup steps for context based Tests.
-
-    await context.Given_A_Todo_of(TODO_ITEMS[0]);
-    await context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
-    await context.When_Add_Todo();
-    await context.Then_Todos_Should_Contain([TODO_ITEMS[0], TODO_ITEMS[1]]);
-    await context.Then_Total_ToDos_In_LocalStorage_Should_Be(2);
-    await context.Then_Input_Cleared_For_Next_Entry();
-  })
-
-  test('New Todos added to Bottom of List', async ({page})=>{
-    const context = new OutOfTheBoxContext(page);
-
-    await context.OnToDoAppPage(); // Example of common setup steps for context based Tests.
-
-    await context.Given_A_Todo_of(TODO_ITEMS[0]);
-    await context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
-    await context.When_Add_Todo();
-    await context.Then_Todos_Appear_In_Order([TODO_ITEMS[0], TODO_ITEMS[1]]);
-  })
-});
-
-test.describe('New Todo', () => {
-  test('should allow me to add todo items', async ({ page }) => {
-    // create a new todo locator
-    const newTodo = page.getByPlaceholder('What needs to be done?');
-
-    // Create 1st todo.
-    await newTodo.fill(TODO_ITEMS[0]);
-    await newTodo.press('Enter');
-
-    // Make sure the list only has one todo item.
-    await expect(page.getByTestId('todo-title')).toHaveText([
-      TODO_ITEMS[0]
-    ]);
-
-    // Create 2nd todo.
-    await newTodo.fill(TODO_ITEMS[1]);
-    await newTodo.press('Enter');
-
-    // Make sure the list now has two todo items.
-    await expect(page.getByTestId('todo-title')).toHaveText([
-      TODO_ITEMS[0],
-      TODO_ITEMS[1]
-    ]);
-
-    await checkNumberOfTodosInLocalStorage(page, 2);
+    await _context.OnToDoAppPage();
+    await _context.clearExistingTodos();
+    await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(0);
   });
 
-  test('should append new items to the bottom of the list', async ({ page }) => {
-    // Create 3 items.
-    await createDefaultTodos(page);
+  test('Add One ToDo', async ()=> {
+    await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[0]);
+    await _context.When_Add_Todo();
+    await _context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
+    await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(1);
+    await _context.Then_Input_Cleared_For_Next_Entry();
+  })
 
-    // create a todo count locator
-    const todoCount = page.getByTestId('todo-count')
-  
-    // Check test using different methods.
-    await expect(page.getByText('3 items left')).toBeVisible();
-    await expect(todoCount).toHaveText('3 items left');
-    await expect(todoCount).toContainText('3');
-    await expect(todoCount).toHaveText(/3/);
+  test('Add Multiple ToDos', async ()=>{
+    await _context.Given_A_Todo_of(TODO_ITEMS[0]);
+    await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
+    await _context.When_Add_Todo();
+    await _context.Then_Todos_Should_Contain([TODO_ITEMS[0], TODO_ITEMS[1]]);
+    await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(2);
+    await _context.Then_Input_Cleared_For_Next_Entry();
+  })
 
-    // Check all items in one call.
-    await expect(page.getByTestId('todo-title')).toHaveText(TODO_ITEMS);
-    await checkNumberOfTodosInLocalStorage(page, 3);
-  });
+  test('New Todos added to Bottom of List', async ()=>{
+    await _context.Given_A_Todo_of(TODO_ITEMS[0]);
+    await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
+    await _context.When_Add_Todo();
+    await _context.Then_Todos_Appear_In_Order([TODO_ITEMS[0], TODO_ITEMS[1]]);
+  })
 });
 
 test.describe('Mark all as completed', () => {
