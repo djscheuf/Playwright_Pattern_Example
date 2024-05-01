@@ -40,6 +40,13 @@ test.describe('New Todo - Refactored',()=>{
     await _context.Then_Todos_Should_Contain(TODO_ITEMS);
     await _context.Then_Input_Cleared_For_Next_Entry();
     await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(exampleTodoCount);
-    await _context.Then_Todos_Appear_In_Order(TODO_ITEMS);
   })
+
+  test('New Todos added to Bottom of List', async ()=>{
+    await _context.Given_A_Todo_of(TODO_ITEMS[0]);
+    await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[1]);
+    await _context.When_Add_Todo();
+    await _context.Then_Todos_Appear_In_Order([TODO_ITEMS[0], TODO_ITEMS[1]]);
+  })
+
 });
