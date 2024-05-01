@@ -7,6 +7,7 @@ export class OutOfTheBoxContext {
 
     constructor(givenPage:Page){
         this.page = givenPage;
+        this._pageModel = new OutOfTheBoxModel(givenPage);
     }
 
     async OnToDoAppPage() {
@@ -39,21 +40,21 @@ export class OutOfTheBoxContext {
         await expect(this._pageModel.AllTodos).toHaveText(theseTodos);
     }
 
+    async Then_Input_Cleared_For_Next_Entry(){
+        await expect(this._pageModel.newTodoEntry).toBeEmpty();
+    }
+
+    async Then_Total_ToDos_In_LocalStorage_Should_Be(expected:number){
+        return await this.page.waitForFunction(e => {
+            return JSON.parse(localStorage['react-todos']).length === e;
+          }, expected);
+    }
+    
     async Then_Todos_Appear_In_Order(thisOrderedArray: string[]){
         const allTodos = await this._pageModel.AllTodos.all();
         thisOrderedArray.forEach((entry, index) =>{
             expect(allTodos[index]).toHaveText(entry);
         });
 
-    }
-  
-    async Then_Total_ToDos_In_LocalStorage_Should_Be(expected:number){
-        return await this.page.waitForFunction(e => {
-            return JSON.parse(localStorage['react-todos']).length === e;
-          }, expected);
-    }
-
-    async Then_Input_Cleared_For_Next_Entry(){
-        await expect(this._pageModel.newTodoEntry).toBeEmpty();
     }
 }
