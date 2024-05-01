@@ -1,9 +1,11 @@
 {
   "name": "playwright_pattern_example",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Examples of Test-Context-POM Pattern in Playwright Automation",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "journey":"npx playwright test tests/journeyman.spec.ts",
+    "ootb":"npx playwright test tests/out-of-the-box.spec.ts",
     "setup": "npx playwright install-deps chromium"
   },
   "repository": {
