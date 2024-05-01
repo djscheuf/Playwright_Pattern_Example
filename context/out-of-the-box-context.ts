@@ -21,4 +21,8 @@ export class OutOfTheBoxContext {
     async Then_Todos_Should_Contain(theseTodos: string[]){
         await expect(this._pageModel.AllTodos).toHaveText(theseTodos);
     }
+
+    async Then_Input_Cleared_For_Next_Entry(){
+        await expect(this._pageModel.newTodoEntry).toBeEmpty();
+    }
 }
