@@ -7,7 +7,6 @@ export class OutOfTheBoxContext {
 
     constructor(givenPage:Page){
         this.page = givenPage;
-        this._pageModel = new OutOfTheBoxModel(givenPage);
     }
 
     async OnToDoAppPage() {
