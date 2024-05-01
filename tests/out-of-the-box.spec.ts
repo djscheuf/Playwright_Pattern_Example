@@ -19,36 +19,11 @@ test.describe('New Todo - Refactored',()=>{
     await _context.When_Add_Todo();
     await _context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
     await _context.Then_Input_Cleared_For_Next_Entry();
+    await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(1);
   })
 });
 
 test.describe('New Todo', () => {
-  test('should allow me to add todo items', async ({ page }) => {
-    // create a new todo locator
-    const newTodo = page.getByPlaceholder('What needs to be done?');
-
-    // Create 1st todo.
-    await newTodo.fill(TODO_ITEMS[0]);
-    await newTodo.press('Enter');
-
-    // Make sure the list only has one todo item.
-    await expect(page.getByTestId('todo-title')).toHaveText([
-      TODO_ITEMS[0]
-    ]);
-
-    // Create 2nd todo.
-    await newTodo.fill(TODO_ITEMS[1]);
-    await newTodo.press('Enter');
-
-    // Make sure the list now has two todo items.
-    await expect(page.getByTestId('todo-title')).toHaveText([
-      TODO_ITEMS[0],
-      TODO_ITEMS[1]
-    ]);
-
-    await checkNumberOfTodosInLocalStorage(page, 2);
-  });
-
   test('should append new items to the bottom of the list', async ({ page }) => {
     // Create 3 items.
     await createDefaultTodos(page);

@@ -25,4 +25,10 @@ export class OutOfTheBoxContext {
     async Then_Input_Cleared_For_Next_Entry(){
         await expect(this._pageModel.newTodoEntry).toBeEmpty();
     }
+
+    async Then_Total_ToDos_In_LocalStorage_Should_Be(expected:number){
+        return await this.page.waitForFunction(e => {
+            return JSON.parse(localStorage['react-todos']).length === e;
+          }, expected);
+    }
 }
