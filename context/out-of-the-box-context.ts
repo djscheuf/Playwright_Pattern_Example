@@ -10,6 +10,19 @@ export class OutOfTheBoxContext {
         this._pageModel = new OutOfTheBoxModel(givenPage);
     }
 
+    async OnToDoAppPage() {
+        // use of this method may need to change, as visiting the page is the trigger for the login action.
+        this._pageModel = new OutOfTheBoxModel(this.page);
+        await this._pageModel.Visit();
+        return this;
+    }
+
+    async clearExistingTodos(){
+        return await this.page.waitForFunction(() => {
+            localStorage['react-todos'] = [];
+        });
+    }
+
     async Given_A_Draft_Todo_Of(todoText: string){
        await this._pageModel.newTodoEntry.fill(todoText);
     }
