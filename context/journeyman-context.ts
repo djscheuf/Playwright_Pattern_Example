@@ -20,10 +20,11 @@ export class JourneymanContext {
 
     async Given_Post_From(givenYear: number): Promise<Locator>{
         const partialMatch = new RegExp(`${givenYear}-`);
-        const linkForOlderPost = await this._archivePageModel.AllPostListings
+        const linksForOlderPost = await this._archivePageModel.AllPostListings
             .filter({hasText:partialMatch})
-            .getByRole("link");
-        return linkForOlderPost;
+            .getByRole("link")
+            .all();
+        return linksForOlderPost[0];
     }
 
     async When_Load(linkForPost:Locator){

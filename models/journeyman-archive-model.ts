@@ -10,7 +10,8 @@ export class JourneymanArchiveModel {
 
     public async Visit() {
         await this.page.goto(this._url, { waitUntil: "load" }); // Go to the page this model is for.
-        await this.AllPostListings.waitFor(); // Wait for the page to be interactable.
+        const firstListing = (await this.AllPostListings.all())[0];
+        await firstListing.waitFor(); // Wait for the page to be interactable.
     }
 
     get AllPostListings(): Locator {
