@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class JourneymanArchiveModel {
     private readonly _url = "https://daniel.scheufler.io/archives/";
@@ -10,7 +10,11 @@ export class JourneymanArchiveModel {
 
     public async Visit() {
         await this.page.goto(this._url, { waitUntil: "load" }); // Go to the page this model is for.
-         // Wait for the page to be interactable.
+        await this.AllPostListings.waitFor(); // Wait for the page to be interactable.
+    }
+
+    get AllPostListings(): Locator {
+        return this.page.locator("ul.list>li");
     }
 
 }

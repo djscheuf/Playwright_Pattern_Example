@@ -1,4 +1,4 @@
-import { Browser, Page, expect } from "@playwright/test";
+import { Page, expect, Locator } from "@playwright/test";
 import { JourneymanArchiveModel } from "../models/journeyman-archive-model";
 import { JourneymanPostModel } from "../models/journeyman-post-model";
 
@@ -18,18 +18,21 @@ export class JourneymanContext {
         return this;
     }
 
-    async Given_Post_From(year: number){
-        const some_url = ".";
-        return some_url;
+    async Given_Post_From(givenYear: number): Promise<Locator>{
+        const partialMatch = new RegExp(`${givenYear}-`);
+        const linkForOlderPost = await this._archivePageModel.AllPostListings
+            .filter({hasText:partialMatch})
+            .getByRole("link");
+        return linkForOlderPost;
     }
 
-    async When_Load(urlForPost:string){
-        await this.page.goto(urlForPost);
+    async When_Load(linkForPost:Locator){
+        await linkForPost.click();
         this._postPageModel = new JourneymanPostModel(this.page);
     }
 
     async Then_Display_Temporal_Warning(){
-        expect(true).toBe(false);       
+        expect(this._postPageModel.TemporalWarning).toBeVisible();
     }
 
 }

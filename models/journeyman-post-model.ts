@@ -7,4 +7,8 @@ export class JourneymanPostModel {
         this.page = givenPage;
     }
 
+    get TemporalWarning(){
+        return this.page.locator('.age-warning');
+    }
+
 }
