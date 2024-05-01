@@ -18,6 +18,11 @@ export class OutOfTheBoxContext {
         await this._pageModel.newTodoEntry.press("Enter");
     }
 
+    async Given_A_Todo_of(todoText:string){
+        await this.Given_A_Draft_Todo_Of(todoText);
+        await this.When_Add_Todo();
+    }
+
     async Then_Todos_Should_Contain(theseTodos: string[]){
         await expect(this._pageModel.AllTodos).toHaveText(theseTodos);
     }
@@ -30,5 +35,13 @@ export class OutOfTheBoxContext {
         return await this.page.waitForFunction(e => {
             return JSON.parse(localStorage['react-todos']).length === e;
           }, expected);
+    }
+    
+    async Then_Todos_Appear_In_Order(thisOrderedArray: string[]){
+        const allTodos = await this._pageModel.AllTodos.all();
+        thisOrderedArray.forEach((entry, index) =>{
+            expect(allTodos[index]).toHaveText(entry);
+        });
+
     }
 }

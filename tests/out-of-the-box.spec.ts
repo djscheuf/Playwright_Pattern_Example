@@ -36,6 +36,7 @@ test.describe('New Todo - Refactored',()=>{
     await _context.Then_Todos_Should_Contain(TODO_ITEMS);
     await _context.Then_Input_Cleared_For_Next_Entry();
     await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(exampleTodoCount);
+    await _context.Then_Todos_Appear_In_Order(TODO_ITEMS);
   })
 });
 
