@@ -12,6 +12,9 @@ You can see the steps taken to refactor from the stock PW Test examples towards 
 
 
 ### Journeyman
-The Journeyman examples are executed on the 'A Journeyman's Travels' Blog. The sequence of commits will demonstract a more natural test development flow, starting with a GWT test case. 
+The Journeyman examples are executed on the 'A Journeyman's Travels' Blog. The sequence of commits will demonstrate a more natural test development flow, starting with a GWT test case. 
 
 See the `feat/journeyman` branch for commit sequences.
+
+### Google
+The Goodl examples are executed against an example search thru the Google, of course. The sequence of commits will demonstrate the 'natural' test flow, starting with GWT. However it will lean more towards the E2E style, treating google as a blackbox. We'll be validating the test thru using a third party data supply. 
