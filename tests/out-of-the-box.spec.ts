@@ -47,5 +47,4 @@ test.describe('New Todo - Refactored',()=>{
     await _context.When_Add_Todo();
     await _context.Then_Todos_Appear_In_Order([TODO_ITEMS[0], TODO_ITEMS[1]]);
   })
-
 });

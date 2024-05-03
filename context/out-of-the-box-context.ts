@@ -7,7 +7,6 @@ export class OutOfTheBoxContext {
 
     constructor(givenPage:Page){
         this.page = givenPage;
-        this._pageModel = new OutOfTheBoxModel(givenPage);
     }
 
     async OnToDoAppPage() {
@@ -20,7 +19,7 @@ export class OutOfTheBoxContext {
     async clearExistingTodos(){
         await this.page.evaluate(() => window.localStorage.clear());
     }
-
+    
     async Given_A_Draft_Todo_Of(todoText: string){
        await this._pageModel.newTodoEntry.fill(todoText);
     }
