@@ -12,19 +12,23 @@ export class GoogleResultsModel {
     }
 
     get SearchResults():Locator {
-        return this.MainBody.locator("div[id=search].span",{has:this.MainBody.locator("a")});
+        return this.MainBody.locator("div[id=search] span");
     }
 
     get DirectAnswersColumn(): Locator {
         return this.page.locator("div[id=rhs]");
     }
 
-    get DirectAnswers():Locator {
-        return this.DirectAnswersColumn.locator("div[id=kno-rdesc]").locator("span")[0]
+    async DirectAnswers(): Promise<Locator> {
+        return await this.DirectAnswersColumn
+            .locator("div span")
+            .first();
     }
 
-    get DirectAnswerSource():Locator {
-        return this.DirectAnswersColumn.locator("div[id=kno-rdesc]").locator("a")
+    async DirectAnswerSource():Promise<Locator> {
+        return this.DirectAnswersColumn
+        .locator("div span a")
+        .first();
     }
 
 
