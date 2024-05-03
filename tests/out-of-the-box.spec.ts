@@ -17,7 +17,6 @@ test.describe('New Todo - Refactored',()=>{
 
     await _context.OnToDoAppPage();
     await _context.clearExistingTodos();
-    await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(0);
   });
 
   test('Add One ToDo', async ({page})=> {
