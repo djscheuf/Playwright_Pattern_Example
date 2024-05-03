@@ -2,21 +2,23 @@ import { Page, expect, Locator } from "@playwright/test";
 
 export class GoogleContext {
     private page: Page;
-    
+    private _searchPageModel: GoogleSearchModel;
+
     constructor(givenPage:Page){
         this.page = givenPage;
     }
 
     async OnSearchPage(){
-        return false;
+        this._searchPageModel = new GoogleSearchModel(this.page);
+        await this._searchPageModel.Visit();
     }
 
     async Given_Query_For(queryText: string){
-        return false;
+        this._searchPageModel.queryBox.fill(queryText);
     }
 
     async When_Search(){
-        return false;
+        this._searchPageModel.press("Enter");
     }
 
     async Then_I_Get_Direct_Answers(){
@@ -24,7 +26,7 @@ export class GoogleContext {
     }
     
     
-    async Then_Those_Answers_Match_Their_Source(){
+    async Then_I_Get_Direct_Answers(){
         expect(true).toBe(false);
     }
 }
