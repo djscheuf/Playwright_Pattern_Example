@@ -13,9 +13,8 @@ export class GoogleSearchModel {
         await this.QueryBox.waitFor(); // Wait for the page to be interactable.
     }
 
-    private readonly boxIdAsOf20240503 = "APjFqb"
     get QueryBox(): Locator {
-        return this.page.locator(`textarea[id=${this.boxIdAsOf20240503}]`);
+        return this.page.getByLabel("Search", { exact: true });
     }
 
 }
