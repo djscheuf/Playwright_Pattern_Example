@@ -19,7 +19,7 @@ test.describe('New Todo - Refactored',()=>{
     await _context.clearExistingTodos();
   });
 
-  test('Add One ToDo', async ({page})=> {
+  test('Add One ToDo', async ()=> {
     await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[0]);
     await _context.When_Add_Todo();
     await _context.Then_Todos_Should_Contain([TODO_ITEMS[0]]);
@@ -27,12 +27,12 @@ test.describe('New Todo - Refactored',()=>{
     await _context.Then_Total_ToDos_In_LocalStorage_Should_Be(1);
   })
 
-  test('Add Many ToDos', async ({page})=> {
+  test('Add Many ToDos', async ()=> {
     const exampleTodoCount = TODO_ITEMS.length;
-    for(let i=0; i++; i<exampleTodoCount-1){
-      await _context.Given_A_Todo_of(TODO_ITEMS[i])
-    }
-    await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[TODO_ITEMS.length-1]);
+
+    await _context.Given_A_Todo_of(TODO_ITEMS[0]);
+    await _context.Given_A_Todo_of(TODO_ITEMS[1]);
+    await _context.Given_A_Draft_Todo_Of(TODO_ITEMS[2])
 
     await _context.When_Add_Todo();
 
