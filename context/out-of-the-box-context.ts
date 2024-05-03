@@ -18,9 +18,7 @@ export class OutOfTheBoxContext {
     }
 
     async clearExistingTodos(){
-        return await this.page.waitForFunction(() => {
-            localStorage['react-todos'] = [];
-        });
+        await this.page.evaluate(() => window.localStorage.clear());
     }
 
     async Given_A_Draft_Todo_Of(todoText: string){
@@ -46,7 +44,7 @@ export class OutOfTheBoxContext {
 
     async Then_Total_ToDos_In_LocalStorage_Should_Be(expected:number){
         return await this.page.waitForFunction(e => {
-            return JSON.parse(localStorage['react-todos']).length === e;
+                return JSON.parse(localStorage['react-todos']).length === e;
           }, expected);
     }
     
