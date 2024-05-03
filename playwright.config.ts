@@ -10,6 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  timeout: 5000,
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -34,7 +35,13 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        trace: "retain-on-failure",
+        screenshot: "on",
+        video: "off",
+        ignoreHTTPSErrors: true 
+      },
     },
   ],
 
