@@ -7,7 +7,8 @@
     "journey":"npx playwright test tests/journeyman.spec.ts",
     "ootb":"npx playwright test tests/out-of-the-box.spec.ts",
     "google":"npx playwright test tests/google.spec.ts",
-    "setup": "npx playwright install-deps chromium"
+    "setup": "npx playwright install-deps chromium",
+    "init": "npm init playwright@latest"
   },
   "repository": {
     "type": "git",
