@@ -10,9 +10,10 @@ test.describe("Google - Quick Results",()=>{
     });
 
     test("Historical Figures should get quick results",async ()=>{
-        await _context.Given_Query_For("George Washington");
+        const historicalFigure = "George Washington";
+        await _context.Given_Query_For(historicalFigure);
         await _context.When_Search();
         await _context.Then_I_Get_Direct_Answers();
-        await _context.Then_Those_Answers_Match_Their_Source();
+        await _context.Then_Those_Answers_Match_Their_Source(historicalFigure);
     });
 })

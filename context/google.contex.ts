@@ -24,22 +24,37 @@ export class GoogleContext {
     async When_Search(){
         await this._searchPageModel.QueryBox.press("Enter");
         this._resultsPageModel = new GoogleResultsModel(this.page);
-        this._resultsPageModel.SearchResults.waitFor();
+        await this._resultsPageModel.MainBody.waitFor();
+        await this._resultsPageModel.DirectAnswersColumn.waitFor();
     }
 
     async Then_I_Get_Direct_Answers(){
-        await expect(this._resultsPageModel.DirectAnswers).toBeVisible();
+        const answer = await this._resultsPageModel.DirectAnswers();
+        expect(answer).toBeVisible();
     }
     
     
-    async Then_Those_Answers_Match_Their_Source(){
-        const directAnswerText = await this._resultsPageModel.DirectAnswers.textContent() || ""; // capture content to Test
+    async Then_Those_Answers_Match_Their_Source(queryText: string){
+        // capture content to Test
+        const answer = await this._resultsPageModel.DirectAnswers();
+        const directAnswerText = await answer.textContent() || ""; 
+        const directAnswerLessQuery = directAnswerText.slice(queryText.length,directAnswerText.length-1);
+        expect(directAnswerLessQuery).toBeTruthy(); 
 
-        expect(directAnswerText).toBeTruthy(); // ensure got content
+        // get Navigation Link
+        const sourceLink = await this._resultsPageModel.DirectAnswerSource()
+        expect(sourceLink).toBeTruthy(); 
 
-        this._resultsPageModel.DirectAnswerSource.click(); // Navigate to source
+        // Navigate to source
+        await sourceLink.click(); 
         const sourceModel = new WikipediaSourceModel(this.page)
-        expect(sourceModel.SourceInfo).toContainText(directAnswerText); // verify content against source
+        await sourceModel.BodyContent.waitFor()
 
+        // verify content against source
+        const sourceInfo = await sourceModel.SourceInfo(queryText);
+        const sourceText = await sourceInfo.allTextContents();
+        const firstParagraph = sourceText[0];
+
+        expect(firstParagraph.includes(directAnswerLessQuery)).toBe(true); 
     }
 }
