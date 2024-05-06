@@ -21,13 +21,13 @@ export class GoogleResultsModel {
 
     async DirectAnswers(): Promise<Locator> {
         return await this.DirectAnswersColumn
-            .locator("div span")
+            .locator("div.kno-rdesc span")
             .first();
     }
 
     async DirectAnswerSource():Promise<Locator> {
         return this.DirectAnswersColumn
-        .locator("div span a")
+        .locator("div.kno-rdesc span a")
         .first();
     }
 
