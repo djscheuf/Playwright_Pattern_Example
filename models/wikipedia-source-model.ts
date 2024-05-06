@@ -8,11 +8,13 @@ export class WikipediaSourceModel {
     }
 
     get BodyContent(): Locator {
-        return this.page.locator("div[id=bodyContnet]");
+        return this.page.locator("div[id=bodyContent]");
     }
 
-    get SourceInfo(): Locator {
-        return this.BodyContent.locator("div[id=mw-content-text]").locator("p");
+    async SourceInfo(queryText:string): Promise<Locator> {
+        return this.BodyContent
+        .locator("div[id=mw-content-text] p")
+        .filter({hasText:queryText})
+        .first();
     }
-
 }
