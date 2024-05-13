@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "journey":"npx playwright test tests/journeyman.spec.ts",
     "ootb":"npx playwright test tests/out-of-the-box.spec.ts",
-    "setup": "npx playwright install-deps chromium"
+    "prepare": "npx playwright install-deps chromium",
+    "setup": "npm init playwright@latest"
   },
   "repository": {
     "type": "git",
