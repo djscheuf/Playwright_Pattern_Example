@@ -3,6 +3,9 @@ Example Playwright Repository demonstrating Test-Context-POM Pattern.
 
 This repo houses several examples of the Test-Context-POM Automation pattern in playwright. It is intended to be used as a working example paired with a training on the use of the pattern. 
 
+## Setup For Training
+Please follow the steps in [Setup Guide](./doc/setup.md) to setup your local to be ready to follow the accompanying trainiong.
+
 ## Examples
 ### Out-Of-The-Box
 When you Init Playwright, it provides some out of the box examples. This spec shows how the out of the box pattern might be refactored into the TC-POM form.
