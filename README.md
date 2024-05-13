@@ -14,4 +14,4 @@ You can see the steps taken to refactor from the stock PW Test examples towards 
 ### Journeyman
 The Journeyman examples are executed on the 'A Journeyman's Travels' Blog. The sequence of commits will demonstract a more natural test development flow, starting with a GWT test case. 
 
-See the `feat/journeyman` branch for commit sequences.
+See the `feat/journeyman` branch for commit sequences. See [PR#4](https://github.com/djscheuf/Playwright_Pattern_Example/pull/4) for the complete list of changes.
